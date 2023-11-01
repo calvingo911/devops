@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bbkal - Basic Calculator</title>
+    <link rel="stylesheet" href="https://www.unpkg.com/bulma@0.9.3/css/bulma.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <!--Menu-->
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <p class="ml-4 mt-2"><img src="https://files.fm/thumb_show.php?i=njsat3g24" width="50px" height="28"></p>
+        </div>  
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <% if (user) { %>
+                    <a class="navbar-item" href="/">
+                    Home
+                    </a>
+                    <a class="navbar-item" href="/basic">
+                    Basic Calculator
+                    </a>
+                    <a class="navbar-item" href="/bmi">
+                    BMI Calculator
+                    </a>
+                    <a class="navbar-item" href="/temperature">
+                    Temperature Calculator
+                    </a>
+                <% } %> 
+            </div>
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                  <% if (user.role == 'admin') { %>
+                    <p class="navbar-item has-text-danger has-text-weight-bold"><%= (user?user.role.toUpperCase():"") %></p>
+                <% }else { %>
+                    <p class="navbar-item has-text-grey-light has-text-weight-medium"><%= (user?user.role.toUpperCase():"") %></p>
+                <% } %> %>
+                  <div class="buttons">
+                      <% if (user.role == 'admin') { %>
+                          <a href="/admin/member" class="button is-warning">Admin Access</a>
+                      <% } %>
+                      <% if (user) { %>
+                        <%- (!user?'<a href="/login" class="button is-light">Login</a>':'<a href="/logout" class="button is-light">Logout</a>') %>
+                      <% } %>
+                  </div>
+                </div>
+              </div>
+    </nav>
+    <!--Cover-->
+    <div class="is-flex mt-6">
+        <div class="login-form-container" style="margin-right: 50px; margin-left: 200px;">
+            <div class="card has-background-info" style="width: 300px; height: 505px;" >
+                <div id="calculator">
+                    <div class="box has-background-info">
+                        <div class="box " style="height: 60px;">
+                            <div id="history">
+                                <p id="history-value"></p>
+                            </div>
+                        </div>
+                        <div class="box" style="height: 60px;">
+                            <div id="output">
+                                <p class="is-size-4" id="output-values"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="keyboard" style="padding: 30px; margin-left: 5px;">
+                        <button class="button operator mb-1" id="clear">C</button>
+                        <button class="button operator mb-1" id="backspace">CE</button>
+                        <button class="button empty mb-1" id="empty">bbkal</button>  
+                        <button class="button operator mb-1" id="%">%</button>
+                        <button class="button angka mb-1" id="7">7</button>
+                        <button class="button angka mb-1" id="8">8</button>
+                        <button class="button angka mb-1" id="9">9</button> 
+                        <button class="button operator mb-1" id="+">+</button>
+                        <button class="button operator mb-1" id="-"> - </button>
+                        <button class="button angka mb-1" id="4">4</button>
+                        <button class="button angka mb-1" id="5">5</button>
+                        <button class="button angka mb-1" id="6">6</button>
+                        <button class="button operator mb-1" id="*">&times;</button>
+                        <button class="button operator mb-1" id="/">/</button>
+                        <button class="button angka mb-1" id="3">3</button>    
+                        <button class="button angka mb-1" id="1">1</button>  
+                        <button class="button angka mb-1" id="2">2</button>
+                        <button class="button operator mb-1" id="/">BB calcu</button>
+                        <button class="button angka mb-1" id="00">00</button>
+                        <button class="button angka mb-1" id="0">0</button>
+                        <button class="button operator mb-1" id="=">=</button>
+                        <button class="button operator mb-1" id="=">Do it !!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section class="hero is-halfheight ">
+            <div class="hero-body">
+                <div class="">
+                    <p class="has-text-weight-bold title is-size-1 mb-4 has-text-warning" >Get Your</p>
+                    <p class="has-text-weight-bold title is-size-1 mb-4 has-text-warning">Calculator Out,</p>
+                    <p class="has-text-weight-bold title is-size-1 mb-4 has-text-info">This Will be Fun</p>
+                    <p class="has-text-grey-light ml-2" id="desc-1"></p>
+                    <p class="has-text-grey-light ml-2" id="desc-2"></p>
+                </div>
+            </div>
+            <footer style="margin-top: 90px;">
+                <div class="content has-text-centered is-size-7">
+                    <p>&#169; 2021, All Right Reserved</p>
+                </div>
+            </footer>
+        </section>
+    </div>   
+    <script>
+        function getHistory(){
+            return document.getElementById("history-value").innerText;
+        }
+        function printHistory(num){
+            document.getElementById("history-value").innerText=num;
+        }
+        function getOutput(){
+            return document.getElementById("output-values").innerText;
+        }
+        function printOutput(num){
+            if(num==""){
+            document.getElementById("output-values").innerText=num;
+            }
+            else{
+                document.getElementById("output-values").innerText=getFormattedNumber(num);
+            }
+        }
+        function getFormattedNumber(num){
+            if(num=="-"){
+                return "";
+            }
+            var n=Number(num);
+            var value= n.toLocaleString("en");
+            return value;
+        }
+        function reverseNumberFormat(num){
+            return Number(num.replace(/,/g, ''));
+        }
+        var operator = document.getElementsByClassName("operator");
+        for( var i=0;i<operator.length;i++){
+            operator[i].addEventListener('click',function(){
+                    if(this.id=="clear"){
+                        printHistory("");
+                        printOutput("");
+                    }
+                    else if(this.id=="backspace"){
+                        var
+                        output=reverseNumberFormat(getOutput()).toString();
+                        if(output){//if output has a value
+                            output= output.substr(0,output.length-1);
+                        printOutput(output);
+                        }
+                    }
+                    else{
+                        var output = getOutput();
+                        var history = getHistory();
+                        if(output==""&&history!=""){
+                            if(isNaN(history[history.length-1])){
+                                history=history.substr(0,history.length-1);
+                            }
+                        }
+                        if(output!="" || history!=""){
+                            output= output==""?
+                            output:reverseNumberFormat(output);
+                            history=history+output;
+                            if(this.id=="="){
+                                var result= eval(history);
+                                printOutput(result);
+                                printHistory("");
+                            }
+                            else{
+                                history=history+this.id;
+                                printHistory(history);
+                                printOutput("");
+                            }
+                        }
+                    }
+            });
+        }
+        var number = document.getElementsByClassName("angka");
+        for(var i=0;i<number.length;i++){
+            number[i].addEventListener('click',function(){
+                var output=reverseNumberFormat(getOutput());
+                if(output!=NaN){
+                    output=output+this.id;
+                    printOutput(output);
+                }
+            });
+        }
+    </script>
+</body>
+</body>
+</html>

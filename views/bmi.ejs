@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bbkal - BMI Calculator</title>
+    <!-- <link rel="stylesheet" href="../public/css/style.css"> -->
+    <link rel="stylesheet" href="https://www.unpkg.com/bulma@0.9.3/css/bulma.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <!--Menu-->
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <p class="ml-4 mt-2"><img src="https://files.fm/thumb_show.php?i=njsat3g24" width="50px" height="28"></p>
+        </div>  
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <% if (user) { %>
+                    <a class="navbar-item" href="/">
+                    Home
+                    </a>
+                    <a class="navbar-item" href="/basic">
+                    Basic Calculator
+                    </a>
+                    <a class="navbar-item" href="/bmi">
+                    BMI Calculator
+                    </a>
+                    <a class="navbar-item" href="/temperature">
+                    Temperature Calculator
+                    </a>
+                <% } %> 
+            </div>
+        </div>
+        <div class="navbar-end">
+            <div class="navbar-item">
+              <% if (user.role == 'admin') { %>
+                <p class="navbar-item has-text-danger has-text-weight-bold"><%= (user?user.role.toUpperCase():"") %></p>
+            <% }else { %>
+                <p class="navbar-item has-text-grey-light has-text-weight-medium"><%= (user?user.role.toUpperCase():"") %></p>
+            <% } %> %>
+              <div class="buttons">
+                  <% if (user.role == 'admin') { %>
+                      <a href="/admin/member" class="button is-warning">Admin Access</a>
+                  <% } %>
+                  <% if (user) { %>
+                    <%- (!user?'<a href="/login" class="button is-light">Login</a>':'<a href="/logout" class="button is-light">Logout</a>') %>
+                  <% } %>
+              </div>
+            </div>
+          </div>
+
+    </nav>
+    <!--Cover-->
+    <div class="tile mt-6">
+        <div class="tile">
+            <div class="login-form-container" style="margin-left: 50px;">
+                <div class="card" style="width: 300px; margin-left: 100px;" >
+                    <div class="wrapper">
+                        <div class="form" style="padding: 20px; height: 400px;">
+                            <p class="text mb-4">Kalkulator BMI</p>
+                            <p class="text mt-4">Height</p>
+                            <input class="input" type="text" type="text" id="h" placeholder="tinggi badan (cm)">
+                            <p class="text mt-3">Weight</p>
+                            <input class="input" type="text" id="w" placeholder="berat badan (kg)">
+                            <p id="result"></p>
+                            <button id="btn" class="button mt-5" onClick="hitung()">Calculate</button>
+                            <h4 id="bmi" class="text mt-3 ml-3"></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tile is-parent is-vertical">
+            <div class="">
+                <p class="has-text-weight-bold title is-size-1 mb-4 has-text-warning" >Get Your Calculator Out,</p>
+                <p class="has-text-weight-bold title is-size-1 mb-4 has-text-info">This Will be Fun</p>
+            </div>
+        <article class="tile is-child box">
+            <p class="title is-size-6">Keterangan :</p>
+            <p class="subtitle is-size-6 mt-4" id="keterangan"></p>
+        </article>
+        </div>
+    </div>
+    <!--Footer-->
+    <footer style="margin-top: 100px;">
+        <div class="content has-text-centered is-size-7">
+            <p>&#169; 2021, All Right Reserved</p>
+        </div>
+    </footer>
+    <script>
+        var tinggi, berat, keterangan, bmi;
+        function hitung() {
+            tinggi = parseFloat(document.getElementById("h").value);
+            tinggi /= 100;
+            berat = parseFloat(document.getElementById("w").value);
+            bmi = berat / (tinggi * tinggi);
+
+            if (bmi > 27) {
+                keterangan = `Gemuk Akut<br><br>
+		Kelebihan berat badan tingkat berat. Kurangi Berat badan Anda dengan berolahraga dan batasi asupan kalori sesuai anjurkan ahli gizi Anda.
+		Mulailah sadar akan kematian, bahwa sejatinya kematian tidak memandang apapun. Orang yang sehat saja dapat meninggal tiba-tiba, apalagi orang yang tidak pandai menjaga kesehatannya. Kematian memang sudah
+		ditentukan, tetapi pasantaskah bagi kita merusak apa yang telah tuhan berikan kepada kita?. Maka dari itu mulailah membenahi diri sedikit-demi sedikit, mulai perbanyak ibadah kepada tuhan ,hingga
+		kita layak disebut sebagai hamba yang pandai bersyukur.`;
+            } else if ((bmi >= 25.1) & (bmi <= 27)) {
+                keterangan = `Gemuk <br><br>
+		Kelebihan berat badan tingkat ringan. Kurangi Berat badan Anda dengan berolahraga dan batasi asupan kalori sesuai anjuran ahli gizi Anda`;
+            } else if ((bmi >= 18.5) & (bmi <= 25)) {
+                keterangan = `Normal <br><br>
+		Level Status BMI Anda adalah Normal. Pertahankan berat badan Anda dengan makanan yang sehat dan berolahraga.`;
+            } else if ((bmi >= 17) & (bmi <= 18.4)) {
+                keterangan = `Kurus, Kekurangan berat badan tingkat ringan <br><br>
+		Level Status BMI Anda adalah Kurang berat badan. Tingkatkan berat badan ideal Anda dengan berkonsultasi dengan ahli gizi Anda`;
+            } else {
+                keterangan = `Kurus <br><br>
+		Kekurangan berat badan tingkat berat. Tingkatkan berat badan ideal Anda dengan berkonsultasi dengan ahli gizi Anda`;
+            }
+            document.getElementById('bmi').innerHTML = "Hasil perhitungan BMI " + bmi.toFixed(1);
+            document.getElementById('keterangan').innerHTML = keterangan;
+        }
+    </script>
+</body>
+</body>
+</html>

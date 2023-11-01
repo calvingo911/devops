@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bbkal - Login to your account</title>
+    <!-- <link rel="stylesheet" href="../public/css/style.css"> -->
+    <link rel="stylesheet" href="https://www.unpkg.com/bulma@0.9.3/css/bulma.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+</head>
+<body>
+    <!--Menu-->
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <% if (user) { %>
+            <p class="ml-4 mt-2"><img src="https://files.fm/thumb_show.php?i=njsat3g24" alt="BBKAL LOGO has expired at 4 februari 2022" width="50px" height="28"></p>
+          <% } %>
+        </div>  
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-start">
+            <% if (user) { %>
+              <a class="navbar-item" href="/">
+                Home
+              </a>
+              <a class="navbar-item" href="/basic">
+                Basic Calculator
+              </a>
+              <a class="navbar-item" href="/bmi">
+                BMI Calculator
+              </a>
+              <a class="navbar-item" href="/temperature">
+                Temperature Calculator
+              </a>
+          <% } %>  
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    <!--Cover-->
+    <div class="is-flex mt-6">
+        <section class="hero is-halfheight ">
+            <div class="hero-body">
+              <div class="">
+                <p class="has-text-weight-bold title is-size-1  has-text-warning" >Let's get Your Calculator Now!</p>
+                <p class="has-text-weight-bold title is-size-1 mb-4 has-text-warning"></p>
+                <p class="has-text-weight-bold title is-size-1 mb-4 has-text-info">Because This Will be very Fun</p>
+                <p class="has-text-grey-light ml-2" id="desc-1"></p>
+                <p class="has-text-grey-light ml-2" id="desc-2"></p>
+              </div>
+            </div>
+          </section>
+          <form action="/login" method="post" name="login">
+            <div class="login-form-container" style="margin-right: 50px; margin-left: 400px;">
+                <div class="card" style="width: 300px;" >
+                    <div class="card-image">
+                      <figure class="image ">
+                        <img src="https://files.fm/thumb_show.php?i=njsat3g24" alt="Placeholder image" style="width:100px; height:100px;margin: auto;">
+                      </figure>
+                    </div>
+                    <div class="card-content">
+                      <div class="media">
+                        <p class="is-size-5 has-text-centered">Login</p>
+                      </div>
+                      <div class="content">
+                        <div class="field">
+                            <p class="control has-icons-left has-icons-right">
+                                <input class="input mb-2" type="text" name="name" placeholder="Name" autocomplete="off">
+                              <span class="icon is-small is-left">
+                                <span class="material-icons">alternate_email</span>
+                              </span>
+                              <span class="icon is-small is-right">
+                                <i class="fas fa-check"></i>
+                              </span>
+                            </p>
+                          </div>
+                          <div class="field">
+                            <p class="control has-icons-left">
+                                <input class="input mb-2" type="password" name="password" placeholder="Password">
+                              <span class="icon is-small is-left"><span class="material-icons">https</span>
+                              </span>
+                            </p>
+                          </div>
+                          <div class="field">
+                            <p class="control">
+                              <input class="button is-success" type="submit" value="login">
+                            </p>
+                            <% if (message) { %>
+                                <span style="color: red;"> <%= message %> </span>
+                               <% } %>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </form>
+    </div>
+    <!--Main-->
+    <!--Footer-->
+    <footer>
+        <div class="content has-text-centered is-size-7">
+            <p>&#169; 2021, All Right Reserved</p>
+        </div>
+      </footer>
+    <script>
+        /* load title */
+        let title = {
+            "desc1" : "From the time I was 7, when I purchased my first calculator,I was fascinated by the idea of a machine what could compute things.<br>",
+            "desc2" : "Michael Dell"
+        }
+        let desc1 = document.getElementById("desc-1")
+        let desc2 = document.getElementById("desc-2")
+        let desc1Web = title.desc1
+        let desc2Web = title.desc2
+        desc1.innerHTML += desc1Web
+        desc2.innerHTML += desc2Web 
+    </script>
+</body>
+</html>

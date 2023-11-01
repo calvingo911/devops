@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bbkal - Temperature Calculator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://www.unpkg.com/bulma@0.9.3/css/bulma.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        ul {
+            margin-bottom: 0px !important;
+            padding: 10px 0;
+        }
+        .container {
+            margin-bottom: 20px;
+            width: 50%;
+        }
+        .container h1, .card-header h5 {
+            color: #3db2ff;
+        }
+        .form-group label {
+            color: #ffb830;
+            font-weight: bold;
+        }
+        #nilai_suhu::placeholder, #hasil::placeholder, #satuan_ke{
+            color: #999; 
+        }
+        #konversi {
+            background: #3db2ff;
+            border: #3db2ff;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <p class="ml-4 mt-2"><img src="https://files.fm/thumb_show.php?i=njsat3g24" width="50px" height="28"></p>
+        </div>  
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+            <% if (user) { %>
+                <a class="navbar-item" href="/">
+                Home
+                </a>
+                <a class="navbar-item" href="/basic">
+                Basic Calculator
+                </a>
+                <a class="navbar-item" href="/bmi">
+                BMI Calculator
+                </a>
+                <a class="navbar-item" href="/temperature">
+                Temperature Calculator
+                </a>
+            <% } %> 
+            </div>
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <% if (user.role == 'admin') { %>
+                        <p class="navbar-item has-text-danger has-text-weight-bold"><%= (user?user.role.toUpperCase():"") %></p>
+                    <% }else { %>
+                        <p class="navbar-item has-text-grey-light has-text-weight-medium"><%= (user?user.role.toUpperCase():"") %></p>
+                    <% } %> %>
+                    <div class="buttons">
+                        <% if (user.role == 'admin') { %>
+                            <a href="/admin/member" class="button is-warning">Admin Acces</a>
+                        <% } %>
+                        <%- (!user?'<a href="/login" class="button is-light">Login</a>':'<a href="/logout" class="button is-light">Logout</a>') %>
+                    </div>
+                </div>
+            </div>
+    </nav>
+    
+    <main>
+        <div class="container">
+            <h1 class="text-center mt-4 mb-4">Temperature Calculator</h1>
+            <div class="card shadow">
+                <div class="card-header">
+                    <h5>Input nilai yang akan dikonversi</h5>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="nilai_suhu">Suhu</label>
+                        <input type="text" class="form-control" id="nilai_suhu" placeholder="Nilai Celcius">
+                    </div>
+                    <div class="form-group">
+                        <label for="satuan_ke">Konversi Ke</label>
+                        <select class="form-control" id="satuan_ke">
+                            <option value="fahrenheit">Fahrenheit</option>
+                            <option value="reamur">Reamur</option>
+                            <option value="kelvin">Kelvin</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="hasil">Hasil</label>
+                        <input type="text" class="form-control" id="hasil" placeholder="Hasil Konversi">
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="button" id="konversi" class="btn btn-primary">Konversi</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer style="margin-top: 7    0px;">
+        <div class="content has-text-centered is-size-7">
+            <p>&#169; 2021, All Right Reserved</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $('#konversi').on('click', function () {
+            var suhu = $('#nilai_suhu').val();
+            const satuan_ke = $('#satuan_ke').val();
+
+            var hasil = 0;
+
+            if (suhu != "") {
+                suhu = parseFloat(suhu);
+
+                if (satuan_ke == "kelvin") {
+                    hasil = suhu + 273.15;
+                } else if (satuan_ke == "fahrenheit") {
+                    hasil = (9 / 5 * suhu) + 32;
+                } else if (satuan_ke == "reamur") {
+                    hasil = (4 / 5 * suhu);
+                }
+
+                $('#hasil').val(hasil);
+
+            }
+        });
+    </script>
+</body>
+
+</html>
