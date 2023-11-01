@@ -4,14 +4,12 @@ website calculator
 # Tahap-tahap menjalankan website di container DOCKER
 
 - Download file code github
-- Extract file menjadi sebuah folder dan buka terminal pada folder tersebut secara langsung dengan menggunakan <b>git bash</b>
-- Setup Docker image yang diperlukan
+- Extract file menjadi sebuah folder dan ,
+- Buka terminal pada folder tersebut secara langsung dengan menggunakan <b>git bash</b>
 
-<h1>Setup Docker Image</h1>
-
-- docker run phpmyadmin
+- docker run mysql
   
-- docker run node:20.9.0-slim
+- docker 
 
 - <b>docker-compose up</b>
 
