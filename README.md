@@ -28,7 +28,7 @@ nb : untuk mencreate volume dengan nama bbkaldata
 
 - Setelah sudah jalan didocker, maka install database dbeaver supaya mysql nya bisa konek ke database :
   
->>https://dbeaver.io/download/
+>https://dbeaver.io/download/
 
 - Nb: Database tidak harus dbeaver, bisa dengan database manager lainnya
 
