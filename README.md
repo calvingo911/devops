@@ -7,21 +7,43 @@ website calculator
 - Extract file menjadi sebuah folder dan ,
 - Buka terminal pada folder tersebut secara langsung dengan menggunakan <b>git bash</b>
 
+Image yang diperlukan :
+
 - docker run mysql
   
-- docker 
+- docker pull node
 
-- <b>docker-compose up</b>
+- docker pull dbeaver/cloudbeaver
 
-Klik link yang sudah di create pada docker :
+
+Hal yang perlu di Build setelah menginstall image dan code :
+
+- docker volume create bbkaldata
+
+nb : untuk mencreate volume dengan nama bbkaldata
+
+- docker-compose build
+
+- docker-compose up
+
+- Setelah sudah jalan didocker, maka install database dbeaver supaya mysql nya bisa konek ke database :
+  
+>>https://dbeaver.io/download/
+
+- Nb: Database tidak harus dbeaver, bisa dengan database manager lainnya
+
+Setelah selesai download, maka koneksikan databasenya dan dibuatkan table.
+
+
+
+Ketika sudah selesai, Klik link yang sudah di create pada docker :
 - localhost:3000 (nodejs / web)
-- localhost:8080 (phpmyadmin)
+
 
 <h2>Infomasi Jika Ada yg Error</h2>
 <h4>Buka bagian <b>docker-compose.yaml</b></h4>
 
 - Pastikan host pada bagian phpmyadmin sesuai dengan container pada mysql </br>
-  >> contoh : PMA_HOST=bbkal-mysql-1  (bbkal-mysql-1 -> nama container dari mysql)
   
 - Dan juga pastikan PORT nodejs dan phpmyadmin tidak disamakan. Khusus untuk node js, PORT harus sesuai dengan PORT dari index.js
 
@@ -32,6 +54,3 @@ Klik link yang sudah di create pada docker :
    >> FROM node:<b>20.9.0-slim</b>
 
 
-
-<h1>Kekurangan</h1>
-- Database yang ada pada phpmyadmin masih belum bisa terhubung pada website
