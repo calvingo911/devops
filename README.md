@@ -22,6 +22,7 @@ Hal yang perlu di Build setelah menginstall image dan code :
 
 nb : untuk mencreate volume dengan nama bbkaldata
 
+
 - docker-compose build
 
 - docker-compose up
@@ -30,9 +31,10 @@ nb : untuk mencreate volume dengan nama bbkaldata
   
 >https://dbeaver.io/download/
 
-- Nb: Database tidak harus dbeaver, bisa dengan database manager lainnya
+Nb: Database tidak harus dbeaver, bisa dengan database manager lainnya
 
-Setelah selesai download, maka koneksikan databasenya dan dibuatkan table.
+
+Setelah selesai download, maka koneksikan databasenya , buatkan table dan sesuaikan dengan sql yang ada pada file code .sql
 
 
 
@@ -41,16 +43,12 @@ Ketika sudah selesai, Klik link yang sudah di create pada docker :
 
 
 <h2>Infomasi Jika Ada yg Error</h2>
-<h4>Buka bagian <b>docker-compose.yaml</b></h4>
-
-- Pastikan host pada bagian phpmyadmin sesuai dengan container pada mysql </br>
-  
-- Dan juga pastikan PORT nodejs dan phpmyadmin tidak disamakan. Khusus untuk node js, PORT harus sesuai dengan PORT dari index.js
 
 <h4>Buka bagian <b>dockerfile</b></h4>
 
 - pastikan versi node yang di taruh sesuai dengan versi yang di run pada docker</br>
 
    >> FROM node:<b>20.9.0-slim</b>
+
 
 
